@@ -1,0 +1,127 @@
+/* Allgemeine Stile für die Pokémon-Karte */
+.cart {
+    width: 400px;
+    background: linear-gradient(145deg, #ffffff, #f9d423); /* Goldener Farbverlauf für den Rand */
+    border: 3px solid #d4a017; /* Goldener Kartenrand */
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 -8px 16px rgba(255, 255, 255, 0.6);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    font-family: 'Press Start 2P', cursive;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Glanzeffekt, der von unten links nach oben rechts verläuft */
+.cart::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.cart:hover::before {
+    opacity: 1;
+}
+
+/* Header-Bereich der Karte */
+.cartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.cartHeader h2 {
+    font-size: 22px;
+    color: #ff0000; /* Typische rote Farbe für Pokémon-Namen */
+}
+
+.kp {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    background-color: #f1f1f1;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.kp img {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+}
+
+/* Bild des Pokémon */
+.pokemon {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.pokemon img {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #ffcc00;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Stil für Spezialattacken */
+.spezialAtack {
+    margin: 10px 0;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+}
+
+.attackHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.attackHeader img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.attackDescription p {
+    font-size: 12px;
+    color: #333;
+}
+
+/* Stil für normale Attacken */
+.attack {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.attack img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.attackName {
+    font-size: 16px;
+    color: #3b4cca;
+}
+
+.attackPoints {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
