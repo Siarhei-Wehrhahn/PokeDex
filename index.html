@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="./styles/standart.css">
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/pokeCart.css">
-    <script src="scripts/template.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="scripts/global.js"></script>
 </head>
 
 <body onload="loadPokemon()">
@@ -19,6 +19,27 @@
     </header>
     <div class="search">
         <input id="searchBar" type="text" placeholder="Pokemon Name">
+        <select id="pokemonSelector">
+            <option value="alle">Alle Pokémon</option>
+            <option value="normal">Normal</option>
+            <option value="feuer">Feuer</option>
+            <option value="wasser">Wasser</option>
+            <option value="elektrik">Elektrik</option>
+            <option value="pflanze">Pflanze</option>
+            <option value="eis">Eis</option>
+            <option value="kampf">Kampf</option>
+            <option value="gift">Gift</option>
+            <option value="boden">Boden</option>
+            <option value="fliegen">Fliegen</option>
+            <option value="psychisch">Psychisch</option>
+            <option value="käfer">Käfer</option>
+            <option value="gestein">Gestein</option>
+            <option value="geist">Geist</option>
+            <option value="drache">Drache</option>
+            <option value="dunkel">Dunkel</option>
+            <option value="stahl">Stahl</option>
+            <option value="fee">Fee</option>
+        </select>
     </div>
 
     <main id="main_container"></main>
@@ -29,5 +50,7 @@
         <p>© 2024 Inventis Group</p>
     </footer>
 </body>
+<script src="scripts/render.js"></script>
 <script src="scripts/script.js"></script>
+<script src="scripts/template.js"></script>
 </html>

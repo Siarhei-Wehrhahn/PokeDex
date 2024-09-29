@@ -1,7 +1,10 @@
-// Funktion zum Rendern eines Pokémon-Carts
-function getPokeCart(pokemonDetails) {
+// Funktion zum Rendern eines Pokémon-Carts (mit Attackenbeschreibung)
+function getPokeCart(pokemonDetails, effectDescription) {
+    const backgroundColor = checkColor(pokemonDetails);
+    const background = checkBackground(pokemonDetails);
+    
     return /*html*/`
-    <div class="cart" id="pokemon-${pokemonDetails.id}">
+    <div class="cart" id="pokemon-${pokemonDetails.id}" style="background-color: ${backgroundColor}">
         <div class="cartHeader">
             <h2>${pokemonDetails.name.charAt(0).toUpperCase() + pokemonDetails.name.slice(1)}</h2>
             <div class="kp">
@@ -9,7 +12,7 @@ function getPokeCart(pokemonDetails) {
                 <img src="${pokemonDetails.sprites.front_default}" alt="Typ Logo">
             </div>
         </div>
-        <div class="pokemon">
+        <div class="pokemon" style="background-image: url(${background})">
             <img src="${pokemonDetails.sprites.other.home.front_default}" alt="${pokemonDetails.name}">
         </div>
         <div class="spezialAtack">
@@ -18,7 +21,7 @@ function getPokeCart(pokemonDetails) {
                 <p>${pokemonDetails.moves[0].move.name}</p>
             </div>
             <div class="attackDescription">
-                <p>Eine von ${pokemonDetails.moves.length} möglichen Attacken.</p> 
+                <p>${effectDescription}</p>
             </div>
         </div>
         <div class="attack">
