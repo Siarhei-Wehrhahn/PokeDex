@@ -33,6 +33,7 @@ async function loadPokemon(selectedType = 'alle') {  // Default-Wert hinzufügen
     isLoading = false;
 }
 
+//TODO
 // Funktion, um Pokémon zu rendern
 async function loadAndRenderPokemon(selectedType) {
     let container = document.getElementById('main_container');
@@ -96,9 +97,11 @@ async function loadAndRenderPokemon(selectedType) {
         }
     }
 }
+
 let filterArray = (pokemon, selectedType) => {
     return pokemon.filter(p => 
         Array.isArray(p.types) && // Überprüfe, ob `types` ein Array ist
         p.types.some(type => type.type.name === selectedType)
     );
 };
+//TODO
