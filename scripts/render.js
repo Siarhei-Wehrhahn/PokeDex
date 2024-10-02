@@ -1,39 +1,33 @@
 // Funktion, um Pokémon zu laden
-async function loadPokemon(selectedType = 'alle') {  // Default-Wert hinzufügen
+async function loadPokemon(selectedType) {  
     if (isLoading) return;
     isLoading = true;
 
-    // Zuerst laden wir die Pokémon aus dem Local Storage, wenn vorhanden
+    selectedType = selectedType || "alle";
+
     const localStoragePokemon = localStorage.getItem('pokemon');
     if (localStoragePokemon) {
         pokemon = JSON.parse(localStoragePokemon);
         console.log(`Loaded ${pokemon.length} Pokémon from local storage.`);
     }
 
-    // Lade mehr Pokémon von der API, wenn wir den Offset erreichen
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
     let responseAsJson = await response.json();
 
-    // Füge die neuen Pokémon hinzu
     for (const newPokemon of responseAsJson.results) {
         if (!pokemon.some(p => p.name === newPokemon.name)) {
             pokemon.push(newPokemon);
         }
     }
 
-    // Speichere alle Pokémon im Local Storage
     localStorage.setItem('pokemon', JSON.stringify(pokemon));
     console.log(`Stored ${pokemon.length} Pokémon in local storage.`);
 
-    // Render die Pokémon (wir zeigen nur die nächsten 20 an)
-    await loadAndRenderPokemon(selectedType); // Übergabe des selectedType
-
-    // Erhöhe den Offset für das nächste Laden
+    await loadAndRenderPokemon(selectedType);
     offset += 20;
     isLoading = false;
 }
 
-//TODO
 // Funktion, um Pokémon zu rendern
 async function loadAndRenderPokemon(selectedType) {
     let container = document.getElementById('main_container');
@@ -56,6 +50,8 @@ async function loadAndRenderPokemon(selectedType) {
             let pokemonDetails = await fetch(element.url);
             let pokemonDetailsAsJson = await pokemonDetails.json();
 
+            nextPokemons.sort((a, b) => a.name.localeCompare(b.name));
+
             if (!loadedIds.has(pokemonDetailsAsJson.id)) {
                 // Lade Details der ersten Attacke
                 let firstMove = pokemonDetailsAsJson.moves[0].move;
@@ -71,37 +67,41 @@ async function loadAndRenderPokemon(selectedType) {
             }
         }
     } else {
-        // Filtere Pokémon nach Typ
-        const filteredPokemons = filterArray(pokemon, selectedType);
-        let nextFilteredPokemons = filteredPokemons.slice(offset, offset + 20);
+        container.innerHTML = "";
 
-        if (nextFilteredPokemons.length === 0) {
-            console.log(`No more Pokémon of type ${selectedType} to render.`);
-            return;
-        }
-
-        for (const element of nextFilteredPokemons) {
+        for (const element of pokemon) {
             if (!loadedIds.has(element.id)) {
                 let pokemonDetails = await fetch(element.url);
                 let pokemonDetailsAsJson = await pokemonDetails.json();
 
-                let firstMove = pokemonDetailsAsJson.moves[0].move;
-                let moveDetailsResponse = await fetch(firstMove.url);
-                let moveDetailsAsJson = await moveDetailsResponse.json();
+                let firstMove = filterPokemon(pokemonDetailsAsJson, selectedType) ? pokemonDetailsAsJson.moves[0].move : null;
 
-                const effectDescription = moveDetailsAsJson.effect_entries.find(entry => entry.language.name === 'en').effect;
+                if (firstMove != null) {
+                    let moveDetailsResponse = await fetch(firstMove.url);
+                    let moveDetailsAsJson = await moveDetailsResponse.json();
 
-                container.innerHTML += getPokeCart(pokemonDetailsAsJson, effectDescription);
-                loadedIds.add(pokemonDetailsAsJson.id);
+                    const effectDescription = moveDetailsAsJson.effect_entries.find(entry => entry.language.name === 'en').effect;
+
+                    container.innerHTML += getPokeCart(pokemonDetailsAsJson, effectDescription);
+                    loadedIds.add(pokemonDetailsAsJson.id);
+                }
             }
         }
     }
 }
+ // TODO render pokemon function ist nicht fertig für das overlay wichtig!!
+async function renderPokemonInfos(pokemonId) {
+    const container = document.getElementById('overlay');
+    let pokemon = pokemon.find(p => p.id === pokemonId)
+    let pokemonDetails = await fetch(pokemon.url);
+    let pokemonDetailsAsJson = await pokemonDetails.json();
+    container.innerHTML = getPokeInfos(pokemonDetailsAsJson)
+}
 
-let filterArray = (pokemon, selectedType) => {
-    return pokemon.filter(p => 
-        Array.isArray(p.types) && // Überprüfe, ob `types` ein Array ist
-        p.types.some(type => type.type.name === selectedType)
-    );
-};
-//TODO
+let filterPokemon = (pokemon, selectedType) => {
+    if (pokemon.types[0].type.name == selectedType) {
+        return true
+    } else {
+        return false
+    }
+}

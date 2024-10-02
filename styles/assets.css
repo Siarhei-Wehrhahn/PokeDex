@@ -1,0 +1,56 @@
+header h1 {
+    margin-top: 0;
+    padding-top: 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 60px;
+    color: #ffcc00;
+    text-shadow: 4px 4px 0 #3b4cca,
+                 6px 6px 0 #ff0000;
+    text-align: center;
+}
+
+.cartHeader h2 {
+    font-size: 22px;
+    color: #ff0000;
+}
+
+.kp img {
+    width: 40px;
+    margin-left: 14px;
+    filter: drop-shadow(1px 1px 2px rgba(255, 255, 255, 0.361));
+    border-radius: 50%; /* Macht das Icon rund */
+    box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.3),
+                inset 10px 10px 20px rgba(255, 255, 255, 0.5); /* 3D-Effekt */
+    transform: scale(1.1); /* Leicht vergrößert für Fischaugen-Effekt */
+    perspective: 100px; /* Perspektive hinzufügen */
+}
+
+.pokemon img {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.attackHeader img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.attackDescription p {
+    font-size: 12px;
+    color: #333;
+}
+
+.attack img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.pokeball {
+    height: 50px;
+}
+
+.footer p {
+    padding: 16px;
+}

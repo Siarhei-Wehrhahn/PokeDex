@@ -39,18 +39,11 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Header-Bereich der Karte */
 .cartHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 5px 0;
-}
-
-.cartHeader h2 {
-    font-size: 22px;
-    color: #ff0000;
-    /* Typische rote Farbe für Pokémon-Namen */
 }
 
 .kp {
@@ -59,13 +52,6 @@
     font-size: 14px;
 }
 
-.kp img {
-    width: 25px;
-    height: 25px;
-    margin-left: 5px;
-}
-
-/* Bild des Pokémon */
 .pokemon {
     display: flex;
     justify-content: center;
@@ -79,12 +65,6 @@
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.pokemon img {
-    width: 50%;
-    margin-bottom: 10px;
-}
-
-/* Stil für Spezialattacken */
 .spezialAtack {
     margin: 10px 0;
     background-color: #fafafa;
@@ -98,44 +78,4 @@
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-}
-
-.attackHeader img {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-}
-
-.attackDescription p {
-    font-size: 12px;
-    color: #333;
-}
-
-/* Stil für normale Attacken */
-.attack {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
-}
-
-.attack img {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-}
-
-.attackName {
-    font-size: 16px;
-    color: #3b4cca;
-}
-
-.attackPoints {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
 }

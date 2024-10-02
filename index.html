@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/pokeCart.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="scripts/global.js"></script>
 </head>
 
 <body onload="loadPokemon()">
-    <header class="header">
+    <header id="header" class="header">
         <h1>PokeDex</h1>
     </header>
     <div class="search">
@@ -22,34 +21,39 @@
         <select id="pokemonSelector">
             <option value="alle">Alle Pokémon</option>
             <option value="normal">Normal</option>
-            <option value="feuer">Feuer</option>
-            <option value="wasser">Wasser</option>
-            <option value="elektrik">Elektrik</option>
-            <option value="pflanze">Pflanze</option>
-            <option value="eis">Eis</option>
-            <option value="kampf">Kampf</option>
-            <option value="gift">Gift</option>
-            <option value="boden">Boden</option>
-            <option value="fliegen">Fliegen</option>
-            <option value="psychisch">Psychisch</option>
-            <option value="käfer">Käfer</option>
-            <option value="gestein">Gestein</option>
-            <option value="geist">Geist</option>
-            <option value="drache">Drache</option>
-            <option value="dunkel">Dunkel</option>
-            <option value="stahl">Stahl</option>
-            <option value="fee">Fee</option>
+            <option value="fire">Feuer</option>
+            <option value="water">Wasser</option>
+            <option value="electric">Elektrik</option>
+            <option value="grass">Pflanze</option>
+            <option value="ice">Eis</option>
+            <option value="fighting">Kampf</option>
+            <option value="poison">Gift</option>
+            <option value="ground">Boden</option>
+            <option value="flying">Fliegen</option>
+            <option value="psychic">Psychisch</option>
+            <option value="bug">Käfer</option>
+            <option value="rock">Gestein</option>
+            <option value="ghost">Geist</option>
+            <option value="dragon">Drache</option>
+            <option value="dark">Dunkel</option>
+            <option value="steel">Stahl</option>
+            <option value="fairy">Fee</option>
         </select>
     </div>
+
+    <div class="overlay d_none" id="overlay"></div>
 
     <main id="main_container"></main>
 
     <p id="loadBtn">Mehr Pokémon laden</p>
 
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <p>© 2024 Inventis Group</p>
+        <img class="pokeball" src="./assets/img/pokemon.png" alt="pokeball">
+        <div style="width: 148.59px;"></div>
     </footer>
 </body>
+<script src="scripts/global.js"></script>
 <script src="scripts/render.js"></script>
 <script src="scripts/script.js"></script>
 <script src="scripts/template.js"></script>

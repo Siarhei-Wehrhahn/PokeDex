@@ -10,3 +10,53 @@ select {
     height: 31px;
     font-size: 16px;
 }
+
+.overlay {
+    width: 85vw;
+    height: 90vh;
+    background-color: rgba(0, 255, 255, 0.9); /* Halbtransparent */
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto; /* Um sicherzustellen, dass es mittig bleibt */
+    border-radius: 16px; /* Optional: Abgerundete Ecken */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.pokemonHeader {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemonInfoExtendet {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.exit {
+    width: 95%;
+    text-align: end;
+}
+
+.exit_div {
+    width: 100%;
+}
+
+.nameTag {
+    width: 95%;
+}
+
+.pokemonPhoto {
+    height: 95%;
+}

@@ -1,17 +1,21 @@
+let type 
+
 // Funktion zum Scroll-Handling
-function handleScroll() {
+/*function handleScroll() {
     // Lade neue Pokémon, wenn das Ende der Seite erreicht ist
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
-        loadPokemon();
+        loadPokemon(type);
     }
 }
+    
+// Scroll-Event-Listener
+window.addEventListener('scroll', handleScroll);
+*/
 
-// TODO: 
-document.getElementById('searchBar').addEventListener('input', function() {
-    const searchValue = this.value.toLowerCase(); // Den eingegebenen Suchwert abrufen
-    const selectedType = selector.value; // Aktuellen Typ abrufen
+document.getElementById('searchBar').addEventListener('input', (input) => {
+    const searchValue = input.target.value.toLowerCase();
+    const selectedType = selector.value;
 
-    // Füge hier eine neue Filterfunktion hinzu, um Pokémon nach Namen zu filtern
     const filteredPokemons = filterPokemonByName(pokemon, searchValue, selectedType);
     
     // Render die gefilterten Pokémon
@@ -27,7 +31,7 @@ function filterPokemonByName(pokemonList, searchValue, selectedType) {
 // Funktion zum Rendern der gefilterten Pokémon
 function renderFilteredPokemons(filteredPokemons) {
     let container = document.getElementById('main_container');
-    container.innerHTML = ''; // Vorherigen Inhalt löschen
+    container.innerHTML = '';
 
     filteredPokemons.forEach(async element => {
         let pokemonDetails = await fetch(element.url);
@@ -42,15 +46,10 @@ function renderFilteredPokemons(filteredPokemons) {
         container.innerHTML += getPokeCart(pokemonDetailsAsJson, effectDescription);
     });
 }
-// TODO
-
-// Scroll-Event-Listener
-window.addEventListener('scroll', handleScroll);
 
 // Funktion zum Laden der nächsten Pokémon auf Button-Klick
-// Nur vorhanden weil es Pflicht ist!
 document.getElementById('loadBtn').addEventListener('click', () => {
-    loadPokemon();
+    loadPokemon(selectedType);
 });
 
 let checkColor = (pokemon) => {
@@ -63,9 +62,34 @@ let checkBackground = (pokemon) => {
     return typePhoto[primaryType]
 }
 
+let checkTypeIcon = (pokemon) => {
+    const primaryType = pokemon.types[0].type.name
+    return typeicon[primaryType]
+}
+
 const selector = document.getElementById('pokemonSelector');
-selector.addEventListener('change', function() {
+selector.addEventListener('change', () => {
     const selectedType = selector.value;
     offset = 0;
-    loadPokemon(selectedType); // Neues Laden basierend auf dem ausgewählten Typ
+    loadPokemon(selectedType);
+    type = selectedType
 });
+
+function toggleOverlay(pokemonId, pokemonName) {
+    let overlay = document.getElementById('overlay');
+    let header = document.getElementById('header');
+    let main = document.getElementById('main_container');
+    let footer = document.getElementById('footer');
+    if (overlay.classList.contains('d_none')) {
+        renderPokemonInfos(pokemonId, pokemonName);
+        overlay.classList.remove('d_none');
+        header.classList.toggle('blur');
+        main.classList.toggle('blur');
+        footer.classList.toggle('blur')
+    } else {
+        overlay.classList.add('d_none');
+        header.classList.remove('blur');
+        main.classList.remove('blur');
+        footer.classList.remove('blur');
+    }
+}

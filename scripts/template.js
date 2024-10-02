@@ -2,14 +2,15 @@
 function getPokeCart(pokemonDetails, effectDescription) {
     const backgroundColor = checkColor(pokemonDetails);
     const background = checkBackground(pokemonDetails);
+    const checkType = checkTypeIcon(pokemonDetails);
     
     return /*html*/`
-    <div class="cart" id="pokemon-${pokemonDetails.id}" style="background-color: ${backgroundColor}">
+    <div class="cart" id="pokemon-${pokemonDetails.id}" onclick="toggleOverlay(${pokemonDetails.id}, ${pokemonDetails.name})" style="background-color: ${backgroundColor}">
         <div class="cartHeader">
-            <h2>${pokemonDetails.name.charAt(0).toUpperCase() + pokemonDetails.name.slice(1)}</h2>
+            <h2>#${pokemonDetails.id} ${pokemonDetails.name.charAt(0).toUpperCase() + pokemonDetails.name.slice(1)}</h2>
             <div class="kp">
                 <p>KP ${pokemonDetails.stats[0].base_stat}</p>
-                <img src="${pokemonDetails.sprites.front_default}" alt="Typ Logo">
+                <img src="${checkType}" alt="logo">
             </div>
         </div>
         <div class="pokemon" style="background-image: url(${background})">
@@ -24,15 +25,20 @@ function getPokeCart(pokemonDetails, effectDescription) {
                 <p>${effectDescription}</p>
             </div>
         </div>
-        <div class="attack">
-            <div>
-                <img src="" alt="fähigkeitsLogos">
-                <img src="" alt="fähigkeitsLogos">
-                <img src="" alt="fähigkeitsLogos">
-            </div>
-            <p class="attackName">${pokemonDetails.moves[1]?.move.name || 'Unbekannt'}</p>
-            <p class="attackPoints">30</p>
-        </div>
     </div>
     `;
+}
+
+const getPokeInfos = (pokemon) => {
+    const background = checkBackground(pokemon);
+    return /*html*/`
+        <div class="pokemonHeader">
+            <div class="nameTag">${pokeDetails.id} ${pokemon.name}</div>
+            <div class="pokemonPhoto" style="background-image: url(${background})"></div>
+        </div>
+
+        <div class="pokemonInfoExtendet">
+            <div class="exit_div"><p class="exit" onclick="">X</p></div>
+        </div>
+    `
 }
