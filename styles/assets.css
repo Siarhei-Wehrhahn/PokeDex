@@ -54,3 +54,36 @@ header h1 {
 .footer p {
     padding: 16px;
 }
+
+.arrowDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.reverse {
+    rotate: 180deg;
+}
+
+.arrow {
+    width: 50px;
+}
+
+@media(max-width: 470px) {
+    header h1 {
+        font-size: 40px;
+    }
+
+    .search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #searchBar {
+        width: 100px;
+    }
+}

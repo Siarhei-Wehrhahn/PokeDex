@@ -1,6 +1,7 @@
-let pokemon = [];
 let offset = 0;
 let isLoading = false;
+let pokeJson ;
+let pokemon = [];
 
 const typeColors = {
     normal: '#A8A77A',

@@ -1,10 +1,6 @@
-/* Allgemeine Stile für die Pokémon-Karte */
 .cart {
     width: 400px;
-    /*background: linear-gradient(145deg, #ffffff, #f9d423);*/
-    /* Goldener Farbverlauf für den Rand */
     border: 3px solid #d4a017;
-    /* Goldener Kartenrand */
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 -8px 16px rgba(255, 255, 255, 0.6);
     position: relative;
@@ -78,4 +74,21 @@
     display: flex;
     align-items: center;
     margin-bottom: 5px;
+}
+
+@media(max-width: 470px) {
+    .cart {
+        width: 80vw;
+    }
+
+    .cartHeader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .cartHeader h2 {
+        text-align: center;
+    }
 }

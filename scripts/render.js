@@ -1,17 +1,29 @@
-// Funktion, um Pokémon zu laden
-async function loadPokemon(selectedType) {  
+async function loadPokemon(selectedType) {
     if (isLoading) return;
     isLoading = true;
+
+    document.querySelector('.pokeball').classList.add('spin');
+    const loadingDots = document.querySelector('.loading-dots');
+    loadingDots.classList.add('active');
+    
+    let dotsInterval = setInterval(() => {
+        if (loadingDots.innerHTML.length < 4) {
+            loadingDots.innerHTML += '.';
+        } else {
+            loadingDots.innerHTML = '';
+        }
+    }, 350);
 
     selectedType = selectedType || "alle";
 
     const localStoragePokemon = localStorage.getItem('pokemon');
     if (localStoragePokemon) {
         pokemon = JSON.parse(localStoragePokemon);
-        console.log(`Loaded ${pokemon.length} Pokémon from local storage.`);
     }
 
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
+    let limit = (selectedType === 'alle') ? 20 : 500;
+
+    let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
     let responseAsJson = await response.json();
 
     for (const newPokemon of responseAsJson.results) {
@@ -21,31 +33,27 @@ async function loadPokemon(selectedType) {
     }
 
     localStorage.setItem('pokemon', JSON.stringify(pokemon));
-    console.log(`Stored ${pokemon.length} Pokémon in local storage.`);
 
     await loadAndRenderPokemon(selectedType);
-    offset += 20;
+    offset += limit;
+
+    document.querySelector('.pokeball').classList.remove('spin');
+    loadingDots.classList.remove('active');
+    clearInterval(dotsInterval);
+    loadingDots.innerHTML = '';
+
     isLoading = false;
 }
 
-// Funktion, um Pokémon zu rendern
 async function loadAndRenderPokemon(selectedType) {
-    let container = document.getElementById('main_container');
+    let container = document.getElementById('mainContainer');
+    let nextPokemons = pokemon.slice(offset, offset + 20);
 
-    // Berechne die nächsten Pokémon, die gerendert werden sollen
-    let nextPokemons = pokemon.slice(offset, offset + 20); // Nur die nächsten 20 Pokémon
+    if (nextPokemons.length === 0) return;
 
-    // Überprüfe, ob nextPokemons leer ist
-    if (nextPokemons.length === 0) {
-        console.log(`No more Pokémon to render.`);
-        return;
-    }
-
-    // Map für bereits geladene Pokémon
     const loadedIds = new Set();
 
     if (selectedType === 'alle') {
-        // Rendern aller Pokémon
         for (const element of nextPokemons) {
             let pokemonDetails = await fetch(element.url);
             let pokemonDetailsAsJson = await pokemonDetails.json();
@@ -53,33 +61,26 @@ async function loadAndRenderPokemon(selectedType) {
             nextPokemons.sort((a, b) => a.name.localeCompare(b.name));
 
             if (!loadedIds.has(pokemonDetailsAsJson.id)) {
-                // Lade Details der ersten Attacke
                 let firstMove = pokemonDetailsAsJson.moves[0].move;
                 let moveDetailsResponse = await fetch(firstMove.url);
                 let moveDetailsAsJson = await moveDetailsResponse.json();
 
-                // Füge die Beschreibung der Attacke hinzu
                 const effectDescription = moveDetailsAsJson.effect_entries.find(entry => entry.language.name === 'en').effect;
 
-                // Verwende die Attackenbeschreibung beim Rendering des Pokémon
                 container.innerHTML += getPokeCart(pokemonDetailsAsJson, effectDescription);
                 loadedIds.add(pokemonDetailsAsJson.id);
             }
         }
     } else {
-        container.innerHTML = "";
-
-        for (const element of pokemon) {
+        for (const element of nextPokemons) {
             if (!loadedIds.has(element.id)) {
                 let pokemonDetails = await fetch(element.url);
                 let pokemonDetailsAsJson = await pokemonDetails.json();
+                let firstMove = pokemonDetailsAsJson.moves[0].move;
 
-                let firstMove = filterPokemon(pokemonDetailsAsJson, selectedType) ? pokemonDetailsAsJson.moves[0].move : null;
-
-                if (firstMove != null) {
+                if (filterPokemon(pokemonDetailsAsJson, selectedType) && firstMove) {
                     let moveDetailsResponse = await fetch(firstMove.url);
                     let moveDetailsAsJson = await moveDetailsResponse.json();
-
                     const effectDescription = moveDetailsAsJson.effect_entries.find(entry => entry.language.name === 'en').effect;
 
                     container.innerHTML += getPokeCart(pokemonDetailsAsJson, effectDescription);
@@ -88,20 +89,48 @@ async function loadAndRenderPokemon(selectedType) {
             }
         }
     }
+    offset += 20;
 }
- // TODO render pokemon function ist nicht fertig für das overlay wichtig!!
+
+function nextOrPokemons(pokemonId, side) {
+    const maxPokeId = 1025;
+    let newPokeId;
+
+    if (side === "right") {
+        newPokeId = pokemonId + 1;
+        if (newPokeId > maxPokeId) {
+            newPokeId = 1;
+        }
+    } else {
+        newPokeId = pokemonId - 1;
+        if (newPokeId < 1) {
+            newPokeId = maxPokeId;
+        }
+    }
+
+    renderPokemonInfos(newPokeId);
+}
+
+
 async function renderPokemonInfos(pokemonId) {
     const container = document.getElementById('overlay');
-    let pokemon = pokemon.find(p => p.id === pokemonId)
-    let pokemonDetails = await fetch(pokemon.url);
+    const localStoragePokemon = localStorage.getItem('pokemon');
+    if (localStoragePokemon) {
+        pokemon = JSON.parse(localStoragePokemon);
+    }
+
+    let pokemonJson = pokemon[pokemonId - 1];
+
+    let pokemonDetails = await fetch(pokemonJson.url);
     let pokemonDetailsAsJson = await pokemonDetails.json();
-    container.innerHTML = getPokeInfos(pokemonDetailsAsJson)
+
+    container.innerHTML = getPokeInfos(pokemonDetailsAsJson, pokemonJson.name);
 }
 
 let filterPokemon = (pokemon, selectedType) => {
     if (pokemon.types[0].type.name == selectedType) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }

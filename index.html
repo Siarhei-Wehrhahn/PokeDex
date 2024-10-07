@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="./assets/img/pokemon.png">
     <link rel="stylesheet" href="./styles/assets.css">
     <link rel="stylesheet" href="./styles/standart.css">
     <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/pokeCart.css">
+    <link rel="stylesheet" href="./styles/pokeCard.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="scripts/global.js"></script>
 </head>
 
 <body onload="loadPokemon()">
@@ -43,17 +45,16 @@
 
     <div class="overlay d_none" id="overlay"></div>
 
-    <main id="main_container"></main>
+    <main id="mainContainer"></main>
 
-    <p id="loadBtn">Mehr Pokémon laden</p>
+    <p id="loadBtn">Mehr Pokémon laden <span class="loading-dots dots"></span></p>
 
     <footer id="footer" class="footer">
         <p>© 2024 Inventis Group</p>
-        <img class="pokeball" src="./assets/img/pokemon.png" alt="pokeball">
+        <img class="pokeball" id="pokeball" src="./assets/img/pokemon.png" alt="pokeball">
         <div style="width: 148.59px;"></div>
     </footer>
 </body>
-<script src="scripts/global.js"></script>
 <script src="scripts/render.js"></script>
 <script src="scripts/script.js"></script>
 <script src="scripts/template.js"></script>

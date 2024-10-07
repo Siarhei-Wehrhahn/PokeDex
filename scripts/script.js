@@ -1,16 +1,12 @@
 let type 
 
-// Funktion zum Scroll-Handling
-/*function handleScroll() {
-    // Lade neue Pokémon, wenn das Ende der Seite erreicht ist
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+function handleScroll() {
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight -50) {
         loadPokemon(type);
     }
 }
-    
-// Scroll-Event-Listener
+
 window.addEventListener('scroll', handleScroll);
-*/
 
 document.getElementById('searchBar').addEventListener('input', (input) => {
     const searchValue = input.target.value.toLowerCase();
@@ -18,7 +14,6 @@ document.getElementById('searchBar').addEventListener('input', (input) => {
 
     const filteredPokemons = filterPokemonByName(pokemon, searchValue, selectedType);
     
-    // Render die gefilterten Pokémon
     renderFilteredPokemons(filteredPokemons);
 });
 
@@ -28,9 +23,10 @@ function filterPokemonByName(pokemonList, searchValue, selectedType) {
     return filteredByType.filter(p => p.name.toLowerCase().includes(searchValue));
 }
 
+
 // Funktion zum Rendern der gefilterten Pokémon
 function renderFilteredPokemons(filteredPokemons) {
-    let container = document.getElementById('main_container');
+    let container = document.getElementById('mainContainer');
     container.innerHTML = '';
 
     filteredPokemons.forEach(async element => {
@@ -38,7 +34,6 @@ function renderFilteredPokemons(filteredPokemons) {
         let pokemonDetailsAsJson = await pokemonDetails.json();
         const firstMove = pokemonDetailsAsJson.moves[0].move;
 
-        // Füge hier den Move-Detail-Abruf und das Rendering hinzu
         const moveDetailsResponse = await fetch(firstMove.url);
         const moveDetailsAsJson = await moveDetailsResponse.json();
         const effectDescription = moveDetailsAsJson.effect_entries.find(entry => entry.language.name === 'en').effect;
@@ -49,39 +44,45 @@ function renderFilteredPokemons(filteredPokemons) {
 
 // Funktion zum Laden der nächsten Pokémon auf Button-Klick
 document.getElementById('loadBtn').addEventListener('click', () => {
-    loadPokemon(selectedType);
+    loadPokemon(type);
 });
 
-let checkColor = (pokemon) => {
+const checkColor = (pokemon) => {
     const primaryType = pokemon.types[0].type.name;
     return typeColors[primaryType] 
 }
 
-let checkBackground = (pokemon) => {
+const checkBackground = (pokemon) => {
     const primaryType = pokemon.types[0].type.name
     return typePhoto[primaryType]
 }
 
-let checkTypeIcon = (pokemon) => {
+const checkTypeIcon = (pokemon) => {
     const primaryType = pokemon.types[0].type.name
     return typeicon[primaryType]
 }
 
+const checkTypeIcons = (pokemon) => {
+    return pokemon.types.map(type => typeicon[type.type.name]);
+}
+
 const selector = document.getElementById('pokemonSelector');
 selector.addEventListener('change', () => {
+    const mainContainer = document.getElementById('mainContainer')
     const selectedType = selector.value;
     offset = 0;
+    mainContainer.innerHTML = ""
     loadPokemon(selectedType);
     type = selectedType
 });
 
-function toggleOverlay(pokemonId, pokemonName) {
+function toggleOverlay(pokemonId) {
     let overlay = document.getElementById('overlay');
     let header = document.getElementById('header');
-    let main = document.getElementById('main_container');
+    let main = document.getElementById('mainContainer');
     let footer = document.getElementById('footer');
     if (overlay.classList.contains('d_none')) {
-        renderPokemonInfos(pokemonId, pokemonName);
+        renderPokemonInfos(pokemonId);
         overlay.classList.remove('d_none');
         header.classList.toggle('blur');
         main.classList.toggle('blur');
@@ -91,5 +92,18 @@ function toggleOverlay(pokemonId, pokemonName) {
         header.classList.remove('blur');
         main.classList.remove('blur');
         footer.classList.remove('blur');
+    }
+
+    checkOverlayVisibility();
+}
+
+function checkOverlayVisibility() {
+    const overlay = document.getElementById('overlay');
+    const body = document.body;
+
+    if (!overlay.classList.contains('d_none')) {
+        body.style.overflow = 'hidden';
+    } else {
+        body.style.overflow = 'auto';
     }
 }
