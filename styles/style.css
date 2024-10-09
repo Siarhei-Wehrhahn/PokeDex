@@ -16,11 +16,9 @@ select {
     height: 90vh;
     z-index: 100;
     position: fixed;
-    /* Fixed position, um das Overlay immer an derselben Position zu halten */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* Overlay zentrieren */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,7 +66,6 @@ select {
     display: flex;
     justify-content: end;
     margin-right: -24px;
-    cursor: pointer;
     margin-right: 24px;
 }
 
@@ -113,6 +110,7 @@ select {
     .row {
         flex-direction: column;
         overflow-y: auto;
+        justify-content: start;
     }
 
     .pokemonPhoto {
@@ -120,24 +118,40 @@ select {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 95%;
+        height: 80%;
         width: 100%;
-        margin-top: 200px;
     }
 
     .pokemonHeader {
         width: 100%;
+        height: 50%;
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
         border-bottom-left-radius: 0;
+        background-position: 0 -450px;
     }
 
     .pokemonPhoto img {
-        height: 300px;
+        height: 200px;
         width: auto;
     }
 
     .exit_div {
-        margin-right: 0;
+        width: 70vw;
+        padding-top: 200px;
+    }
+
+    .exit_div img {
+        z-index: 10;
+    }
+
+    .pokemonInfoExtendet {
+        width: 100%;
+        height: 50%;
+        overflow-y: auto;
+    }
+    
+    .arrow_div {
+        width: 100%;
     }
 }

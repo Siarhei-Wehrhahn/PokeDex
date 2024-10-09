@@ -69,6 +69,16 @@ header h1 {
 
 .arrow {
     width: 50px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.arrow:hover {
+    transform: scale(1.2);
+}
+
+.exit_div img {
+    cursor: pointer;
 }
 
 @media(max-width: 470px) {
